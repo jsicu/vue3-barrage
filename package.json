@@ -1,7 +1,7 @@
 {
   "name": "vue3-barrage",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "main.js",
   "description": "基于vue3.x开发的弹幕组件",
   "keywords": [

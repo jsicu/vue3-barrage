@@ -104,7 +104,7 @@ function defineLanes(val) {
     :list="data.list" :loop="data.barrageLoop" :speed="data.speed" attachId="barrage" :fontSize="data.fontSize">
     <!-- 自定义弹幕样式 -->
     <template #barrage="list">
-      <span style="color: #00099">{{ list.item }}</span>
+      <span style="color: #00099">{{ list.item.msg }}</span>
     </template>
   </vue3-barrage>
 </template>

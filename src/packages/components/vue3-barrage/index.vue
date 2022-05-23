@@ -173,6 +173,14 @@ watch(() => props.lanesCount as number, (newCount, oldCount) => {
   setLanes();
 });
 
+watch(() => props.speed as number, (newCount, oldCount) => {
+  if (!(newCount >= 1 && newCount <= 10)) {
+    data.speedVal = 6
+  } else {
+    data.speedVal = newCount
+  }
+});
+
 // 字体大小监听
 watch(() => props.fontSize as number, (newVal, oldVal) => {
   handleLineHeight()
