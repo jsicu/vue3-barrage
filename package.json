@@ -1,0 +1,25 @@
+{
+  "name": "vue3-barrage",
+  "private": true,
+  "version": "0.0.1",
+  "main": "main.js",
+  "description": "基于vue3.x开发的弹幕组件",
+  "keywords": [
+    "barrage",
+    "vue3.x",
+    "vue3-barrage"
+  ],
+  "license": "ISC",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "peerDependencies": {
+    "vue": ">=3.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.3.3",
+    "vite": "^2.9.9"
+  }
+}
