@@ -1,9 +1,4 @@
-<!-- 
-  TODO: 移动速度优化为非线性的：进出场快，中间慢；
- -->
-
 <template>
-  <!-- idea：绑定弹幕北京div的id,通过这个id获取dom的位置信息，然后弹幕绝对定位到相同位置 -->
   <div class="barrage-stage" :style="{ width: data.boxWidthVal + 'px', height: data.boxHeightVal + 'px' }"
     v-show="isShow" id="vueBarrageDom" ref="barrageDom">
     <!-- 默认顶部滚动 -->
@@ -25,7 +20,7 @@
 import { withDefaults, onMounted, ref, watch, reactive, getCurrentInstance, ComponentInternalInstance } from 'vue';
 
 import Barrage from './barrage.vue';
-import { barrageType, BarrageType, PositionStatus } from '../../utils/lib';
+import { PositionStatus } from '../../utils/lib';
 
 const { slots } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -44,7 +39,6 @@ window.cancelAnimationFrame =
 // 弹幕数据类型定义
 interface BarrageList {
   id?: number;
-  type: BarrageType;
   avatar?: string | undefined;
   msg: string | undefined;
   style?: any;
@@ -315,7 +309,7 @@ const replay = () => {
 const move = (timestamp: number) => {
   data.normalQueue.forEach((item, i) => {
     if (item.startTime) {
-      if (item.type === barrageType.NORMAL) {
+      if (item.position === 'normal') {
         // 正常弹幕
         normalMove(item, timestamp);
         // 退出条件
@@ -333,7 +327,7 @@ const move = (timestamp: number) => {
         }
       }
     } else {
-      if (item.type === barrageType.BOTTOM || item.type === barrageType.TOP) {
+      if (item.position === 'top' || item.position === 'bottom') {
         if (item.position !== 'top' && item.position !== 'bottom') {
           throw new Error('Position only between top and bottom when the type equal 1');
         }
@@ -430,7 +424,7 @@ const itemReset = (item: Item, timestamp: any) => {
   item.startTime = timestamp;
   item.currentTime = timestamp;
 
-  if (item.type === barrageType.NORMAL) {
+  if (item.position === 'normal') {
     // 弹幕宽度
     const len = strlen(item.msg)
     item.width = len * props.fontSize * 1.2

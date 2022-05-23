@@ -1,5 +1,5 @@
 <template>
-  <div :class="[item.type === barrageType.NORMAL ? 'barrage-normal' : 'barrage-fixed']" :style="item.style">
+  <div :class="[item.position === 'normal' ? 'barrage-normal' : 'barrage-fixed']" :style="item.style">
     <template v-if="isSlot">
       <slot></slot>
     </template>
@@ -9,9 +9,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { defineProps, onMounted, reactive } from 'vue';
-import { barrageType, BarrageType } from '../../utils/lib';
-
+import { defineProps, } from 'vue';
 
 defineProps({
   item: {

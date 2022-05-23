@@ -1,12 +1,9 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import { ref, reactive } from 'vue';
-import { barrageType, BarrageType, PositionStatus } from './packages/utils/lib';
+import { PositionStatus } from './packages/utils/lib';
 
 interface BarrageList {
   id?: number;
-  type: BarrageType;
   avatar?: string | undefined;
   msg: string | undefined;
   style?: any;
@@ -53,7 +50,6 @@ const addToList = () => {
       return {
         id: ++data.currentId,
         msg: data.msg[Math.floor(Math.random() * 20)],
-        type: barrageType.BOTTOM,
         position: 'bottom',
       };
     });
@@ -63,7 +59,6 @@ const addToList = () => {
       return {
         id: ++data.currentId,
         msg: data.msg[Math.floor(Math.random() * 20)],
-        type: barrageType.TOP,
         position: 'top',
       };
     });
@@ -73,8 +68,7 @@ const addToList = () => {
       return {
         id: ++data.currentId,
         msg: data.msg[Math.floor(Math.random() * 20)],
-        position: 'top',
-        type: barrageType.NORMAL,
+        position: 'normal',
       };
     });
     data.barrageList.push(...arr);
@@ -110,6 +104,7 @@ const addToList = () => {
   <vue-barrage ref="barrage" :lanesCount="6" :boxHeight="data.stageHeight" :isShow="data.barrageIsShow"
     :barrageList="data.barrageList" :loop="data.barrageLoop" :speed="data.speed" attachId="barrage"
     :fontSize="data.fontSize">
+    <!-- 自定义弹幕样式 -->
     <template #barrage="list">
       <span style="color: #00099">{{ list.item.msg }}</span>
     </template>
