@@ -7,7 +7,9 @@
   "keywords": [
     "barrage",
     "vue3.x",
-    "vue3-barrage"
+    "vue3-barrage",
+    "vue-barrage",
+    "danmu"
   ],
   "license": "ISC",
   "scripts": {
@@ -21,5 +23,15 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.3",
     "vite": "^2.9.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsicu/vue3-barrage.git"
+  },
+  "licenses": [
+    "MIT"
+  ],
+  "bugs": {
+    "url": "https://github.com/jsicu/vue3-barrage/issues"
   }
 }
