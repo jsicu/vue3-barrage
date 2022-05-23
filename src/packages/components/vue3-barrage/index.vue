@@ -38,13 +38,9 @@ window.cancelAnimationFrame =
 
 // 弹幕数据类型定义
 interface BarrageList {
-  id?: number;
-  avatar?: string | undefined;
   msg: string | undefined;
   style?: any;
-  speed?: number | undefined; // 可开发为不同速度弹幕
   position: PositionStatus;
-  color?: string;
 }
 
 interface Item extends BarrageList {
@@ -61,15 +57,14 @@ interface Props {
   type?: string; // 弹幕时间类型，是一下显示完，还是根据组件开始时间轴分批显示，需要有一个time属性
   attachId: string;
   isShow?: boolean;
-  barrageList: Array<BarrageList>;
+  list: Array<BarrageList>;
   lanesCount?: number;
   boxWidth?: number;
   boxHeight?: number;
   // 字体大小 -》控制行高、行数
   fontSize?: number;
   loop?: boolean;
-  throttleGap?: number;
-  posRender?: Function;
+  defineLanes?: Function;
   speed?: number | string; // 弹幕移动速度
 }
 
@@ -81,7 +76,6 @@ const props = withDefaults(defineProps<Props>(), {
   boxHeight: 0,
   fontSize: 18,
   loop: false,
-  throttleGap: 20,
   speed: 6, // 1-10级 弹幕速度相同
 });
 
@@ -125,6 +119,8 @@ const data = reactive({
 
 const _speedRatio = 3000 // 弹幕移动速度倍率
 const _sizeLineRatio = 1.8 // 字体和行高倍率
+const _throttleGap = 20
+
 
 const barrageDom = ref();
 let $emit = defineEmits(['barrage-list-empty', 'maxRows']);
@@ -162,7 +158,7 @@ onMounted(() => {
   play();
 });
 
-watch(props.barrageList, (newValue, oldValue) => {
+watch(props.list, (newValue, oldValue) => {
   // console.log('obj改变了', newValue, oldValue);
   insertToReadyShowQueue();
   // { deep: true }
@@ -257,8 +253,8 @@ const shuffle = () => {
 const insertToReadyShowQueue = () => {
   clearTimeout(data.readyId);
   data.readyId = setTimeout(() => {
-    while (props.barrageList.length > 0) {
-      let current = props.barrageList.splice(0, data.laneNum);
+    while (props.list.length > 0) {
+      let current = props.list.splice(0, data.laneNum);
       // 给data.normalQueue赋值
       addTask(() => {
         data.normalQueue = [...data.normalQueue, ...current];
@@ -407,9 +403,16 @@ const queueFill = (type: string, currentTime: number, index: number) => {
 // 选择空闲可以插入的泳道
 const selectPos = () => {
   // 如果有用户设置的函数则使用用户的
-  if (props.posRender) {
+  console.log(props.defineLanes);
+  if (props.defineLanes) {
     // 传入参数为当前所有泳道
-    return props.posRender(data.topQueue);
+    const laneIndex = props.defineLanes(data.topQueue) - 1;
+    if (laneIndex < data.topQueue.length && laneIndex >= 0) {
+      return laneIndex
+    } else {
+      throw new Error('lane index should be >0 and <= lanesCount');
+    }
+
   } else {
     // 根据模式选择
     if (data.showInd + 1 > data.laneNum) {
@@ -471,7 +474,7 @@ const moveTo = (item: Item) => {
 };
 
 const runTask = (time: number) => {
-  if (!data.taskLastTime || time - data.taskLastTime >= props.throttleGap) {
+  if (!data.taskLastTime || time - data.taskLastTime >= _throttleGap) {
     let func = data.taskQueue.shift();
     data.taskLastTime = time;
     func();

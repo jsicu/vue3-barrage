@@ -3,17 +3,13 @@ import { ref, reactive } from 'vue';
 import { PositionStatus } from './packages/utils/lib';
 
 interface BarrageList {
-  id?: number;
-  avatar?: string | undefined;
   msg: string | undefined;
-  style?: any;
-  speed?: number | undefined;
   position: PositionStatus;
 }
 
 // 响应式数据
 let data = reactive({
-  barrageList: [] as Array<BarrageList>,
+  list: [] as Array<BarrageList>,
   msg: [
     '礼',
     '老子',
@@ -48,32 +44,35 @@ const addToList = () => {
   if (data.position === 'bottom') {
     const arr: Array<BarrageList> = Array.from({ length: 3 }, (e) => {
       return {
-        id: ++data.currentId,
         msg: data.msg[Math.floor(Math.random() * 20)],
         position: 'bottom',
       };
     });
-    data.barrageList.push(...arr);
+    data.list.push(...arr);
   } else if (data.position === 'top') {
     const arr: Array<BarrageList> = Array.from({ length: 3 }, (e) => {
       return {
-        id: ++data.currentId,
         msg: data.msg[Math.floor(Math.random() * 20)],
         position: 'top',
       };
     });
-    data.barrageList.push(...arr);
+    data.list.push(...arr);
   } else {
     const arr: Array<BarrageList> = Array.from({ length: 30 }, (e) => {
       return {
-        id: ++data.currentId,
         msg: data.msg[Math.floor(Math.random() * 20)],
         position: 'normal',
       };
     });
-    data.barrageList.push(...arr);
+    data.list.push(...arr);
   }
+
 };
+
+function defineLanes(val) {
+  console.log(val)
+  return 1
+}
 
 </script>
 
@@ -101,14 +100,13 @@ const addToList = () => {
     <button type="button" style="float: left" @click="addToList">Add</button>
   </div>
 
-  <vue-barrage ref="barrage" :lanesCount="6" :boxHeight="data.stageHeight" :isShow="data.barrageIsShow"
-    :barrageList="data.barrageList" :loop="data.barrageLoop" :speed="data.speed" attachId="barrage"
-    :fontSize="data.fontSize">
+  <vue3-barrage ref="barrage" :lanesCount="6" :boxHeight="data.stageHeight" :isShow="data.barrageIsShow"
+    :list="data.list" :loop="data.barrageLoop" :speed="data.speed" attachId="barrage" :fontSize="data.fontSize">
     <!-- 自定义弹幕样式 -->
     <template #barrage="list">
-      <span style="color: #00099">{{ list.item.msg }}</span>
+      <span style="color: #00099">{{ list.item }}</span>
     </template>
-  </vue-barrage>
+  </vue3-barrage>
 </template>
 
 <style>
