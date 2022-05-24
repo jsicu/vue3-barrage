@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
-import { PositionStatus } from './packages/utils/lib';
-
-interface BarrageList {
-  msg: string | undefined;
-  position: PositionStatus;
-}
+import { BarrageList } from './packages/utils/lib';
 
 // 响应式数据
 let data = reactive({
@@ -77,7 +72,6 @@ function defineLanes(val) {
 </script>
 
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
   <div>
     <select v-model="data.position">
       <option value="normal">滚动弹幕</option>

@@ -1,9 +1,15 @@
-import type { App, Plugin } from 'vue';
-import vueBarrage from './components/vue3-barrage/index.vue';
+import type { App } from 'vue';
+import vue3Barrage from './components/vue3-barrage/index.vue';
 
-vueBarrage.install = function (app: App) {
-  app.component('vue3Barrage', vueBarrage);
-  return app;
+const components = [vue3Barrage];
+
+const install = (app: App) => {
+  components.map(item => {
+    app.component(item.name, item);
+  });
 };
 
-export default vueBarrage;
+export default {
+  install,
+  ...components,
+};

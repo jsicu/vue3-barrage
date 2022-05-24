@@ -16,11 +16,15 @@
   </div>
 </template>
 
+<script lang="ts">
+export default { name: "vue3Barrage" };
+</script>
+
 <script setup lang="ts">
 import { withDefaults, onMounted, ref, watch, reactive, getCurrentInstance, ComponentInternalInstance } from 'vue';
 
 import Barrage from './barrage.vue';
-import { PositionStatus } from '../../utils/lib';
+import { BarrageList } from '../../utils/lib';
 
 const { slots } = getCurrentInstance() as ComponentInternalInstance;
 
@@ -36,14 +40,8 @@ window.cancelAnimationFrame =
     clearTimeout(requestID);
   };
 
-// 弹幕数据类型定义
-interface BarrageList {
-  msg: string | undefined;
-  style?: any;
-  position: PositionStatus;
-}
-
 interface Item extends BarrageList {
+  style?: any;
   runtimeId?: string | undefined;
   startTime: number;
   currentTime: number;
@@ -527,10 +525,10 @@ const getUuid = () => {
 }
 
 // 暴露自己的属性
-// defineExpose({ pause, replay });
+defineExpose({ pause, replay });
 </script>
 
-<style>
+<style scoped>
 .barrage-stage {
   pointer-events: none;
   position: absolute;
