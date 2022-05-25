@@ -4,10 +4,6 @@
 
 
 
-## 预览
-
-
-
 ## 安装
 
 ```bash
@@ -18,13 +14,12 @@ $ npm install vue3-barrage --save
 
 ```vue
 <template>
-  <button type="button" style="float: left" @click="addToList">Add</button>
-  <vue-barrage ref="barrage" :lanesCount="6" :boxHeight="data.stageHeight" :isShow="data.barrageIsShow" :barrageList="data.barrageList" :loop="data.barrageLoop" :speed="data.speed" attachId="barrage" fontSize="data.fontSize">
-    <!-- 自定义弹幕样式 --> 
+  <vue3-barrage ref="barrage" :lanesCount="6" :boxHeight="data.stageHeight" :isShow="data.barrageIsShow" :list="data.list" :loop="data.barrageLoop" :speed="data.speed" attachId="barrage" :fontSize="data.fontSize">
+    <!-- 自定义弹幕样式 -->
     <template #barrage="list">
       <span style="color: #00099">{{ list.item.msg }}</span>
     </template>
-  </vue-barrage>
+  </vue3-barrage>
 </template>
 
 <script setup lang="ts">
@@ -32,11 +27,7 @@ import { ref, reactive } from 'vue';
 type PositionStatus = 'normal' | 'top' | 'bottom';
 
 interface BarrageList {
-  id?: number;
-  avatar?: string | undefined;
   msg: string | undefined;
-  style?: any;
-  speed?: number | undefined;
   position: PositionStatus;
 }
 
@@ -131,6 +122,14 @@ const addToList = () => {
 | msg      | 弹幕文本                                   | string                  |
 | position | 弹幕位置。滚动、顶部固定、底部固定         | normal \| top \| bottom |
 | 其他     | 自己定义的在插槽里自己使用，插槽使用见下面 |                         |
+
+
+
+## 方法
+
+| 方法    | 说明               | 参数            |
+| ------- | ------------------ | --------------- |
+| maxRows | 最大行数改变时触发 | (value: number) |
 
 
 
