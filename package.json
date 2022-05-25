@@ -1,6 +1,8 @@
 {
   "name": "vue3-barrage",
-  "version": "0.2.1",
+  "private": false,
+  "version": "0.3.0",
+  "main": "index.ts",
   "description": "基于vue3.x开发的弹幕组件",
   "keywords": [
     "barrage",
@@ -10,18 +12,6 @@
     "danmu",
     "弹幕"
   ],
-  "main": "./dist/vue3-barrage.umd.js",
-  "module": "./dist/vue3-barrage.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/vue3-barrage.es.js",
-      "require": "./dist/vue3-barrage.umd.js"
-    },
-    "./dist/style.css": {
-      "import": "./dist/style.css",
-      "require": "./dist/style.css"
-    }
-  },
   "license": "MIT",
   "scripts": {
     "dev": "vite",
