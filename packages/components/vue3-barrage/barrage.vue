@@ -3,9 +3,7 @@
     <template v-if="isSlot">
       <slot></slot>
     </template>
-    <div v-else class="normal">
-      <div class="barrage-msg">{{ item.msg || '弹幕没内容呀' }}</div>
-    </div>
+    <div v-else class="barrage-msg">{{ item.msg || '弹幕没内容呀' }}</div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -42,12 +40,6 @@ defineProps({
   box-sizing: border-box;
   text-align: center;
   white-space: nowrap;
-}
-
-.normal {
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 100px;
-  color: #fff;
 }
 
 .barrage-msg {
